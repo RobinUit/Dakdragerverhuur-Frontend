@@ -1,0 +1,28 @@
+{
+    "nav": {
+        "home": "Home",
+        "rents": "Huurprijzen",
+        "reserve": "Reserveren",
+        "contact": "Contact"
+    },
+    "home": {
+
+    },
+    "rents": {
+
+    },
+    "reserve": {
+
+    },
+    "contact": {
+
+    },
+    "notifications": {
+        "fail": "De actie is mislukt",
+        "success": "De actie is gelukt"
+    },
+    "other": {
+        "nl": "Nederlands",
+        "en": "Engels"
+    }
+}

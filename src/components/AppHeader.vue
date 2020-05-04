@@ -6,19 +6,21 @@
           <h1>Dakdragerverhuur.nl</h1>
         </div>
         <nav>
-          <router-link to="/">Home</router-link>
-          <router-link to="/huurprijzen">Huurprijzen</router-link>
-          <router-link to="/reserveren">Reserveren</router-link>
-          <router-link to="/contact">Contact</router-link>
+          <router-link to="/">{{ $t('nav.home')}}</router-link>
+          <router-link to="/huurprijzen">{{ $t('nav.rents')}}</router-link>
+          <router-link to="/reserveren">{{ $t('nav.reserve')}}</router-link>
+          <router-link to="/contact">{{ $t('nav.contact')}}</router-link>
         </nav>
-        <div class="localization">Test</div>
+        <div class="localization">
+          <LocaleSwitcher />
+        </div>
       </div>
       <div class="mobileNavigation">
         <nav>
-          <router-link to="/">Home</router-link>
-          <router-link to="/huurprijzen">Huurprijzen</router-link>
-          <router-link to="/reserveren">Reserveren</router-link>
-          <router-link to="/contact">Contact</router-link>
+          <router-link to="/">{{ $t('nav.home')}}</router-link>
+          <router-link to="/huurprijzen">{{ $t('nav.rents')}}</router-link>
+          <router-link to="/reserveren">{{ $t('nav.reserve')}}</router-link>
+          <router-link to="/contact">{{ $t('nav.contact')}}</router-link>
         </nav>
       </div>
     </div>
@@ -27,9 +29,13 @@
 
 <script>
 import router from "../router";
+import LocaleSwitcher from "./LocaleSwitcher.vue";
 
 export default {
   name: "AppHeader",
+  components: {
+    LocaleSwitcher
+  },
   methods: {
     navigate: function() {
       router.push("home");

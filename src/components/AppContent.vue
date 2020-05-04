@@ -1,5 +1,9 @@
 <template>
-  <router-view />
+  <div class="container">
+    <div class="content-wrapper">
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -8,4 +12,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.container {
+  min-height: calc(100vh - 75px);
+  text-align: center;
+  width: 100vw;
+}
+
+.content-wrapper {
+  display: inline-block;
+  width: 90vw;
+  max-width: 1080px;
+  align-items: center;
+  padding-top: 60px;
+}
+</style>
