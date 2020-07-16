@@ -9,7 +9,7 @@
             :key="locale"
             @click="switchLocale(locale)"
           >
-            {{ $t("other." + locale) }}
+            {{ locale }}
           </li>
         </ul>
       </div>
@@ -40,60 +40,41 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="scss">
 .currentLocale {
-  position: relative;
-  display: inline;
+  display: inline-block;
 }
 
 .currentLocale img {
-  height: 36px;
-}
-
-li {
-  text-decoration: none;
-  list-style: none;
+  vertical-align: middle;
+  width: 28px;
+  margin: auto 0;
 }
 
 .localeDropdown {
+  display: none;
   position: absolute;
-  width: 180px;
-  color: #ffffff;
-  background: #000000;
-  height: 60px;
-  line-height: 30px;
-  text-align: left;
-  visibility: hidden;
-  border-radius: 6px;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+
+  a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+
+    p {
+      font-weight: normal;
+    }
+  }
 }
 
-.localeDropdown ul {
-  margin: 5px;
-}
-
-.localeDropdown li {
-  cursor: pointer;
-}
-
-.localeDropdown:after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  right: 5%;
-  margin-left: -8px;
-  width: 0;
-  height: 0;
-  border-bottom: 8px solid #000000;
-  border-right: 8px solid transparent;
-  border-left: 8px solid transparent;
-}
-
-.locale:hover .localeDropdown {
-  visibility: visible;
-  opacity: 0.8;
-  top: 20px;
-  right: 0%;
-  z-index: 999;
+.currentLocale:hover .localeDropdown {
+  display: block;
 }
 </style>

@@ -21,7 +21,7 @@ export default {
 
 .content-wrapper {
   display: inline-block;
-  width: 90vw;
+  width: 100%;
   max-width: 1080px;
   align-items: center;
   padding-top: 60px;

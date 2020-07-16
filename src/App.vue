@@ -1,24 +1,26 @@
 <template>
   <div id="app">
-    <AppHeader/>
-    <AppContent/>
-    <AppFooter/>
+    <v-app>
+      <AppHeader />
+      <AppContent />
+      <AppFooter />
+    </v-app>
   </div>
 </template>
 
 <script>
-import AppFooter from "@/components/AppFooter";
-import AppHeader from "@/components/AppHeader";
-import AppContent from "@/components/AppContent";
+import AppFooter from "@/components/shared/AppFooter";
+import AppHeader from "@/components/shared/AppHeader";
+import AppContent from "@/components/shared/AppContent";
 
 export default {
   name: "App",
   components: {
     AppHeader,
     AppFooter,
-    AppContent
+    AppContent,
   },
-}
+};
 </script>
 
 <style scoped>

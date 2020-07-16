@@ -20,9 +20,5 @@
     "notifications": {
         "fail": "The action failed",
         "success": "The action succeeded"
-    },
-    "other": {
-        "nl": "Dutch",
-        "en": "English"
     }
 }

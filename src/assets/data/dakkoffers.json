@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "title": "Thule Force XT S",
+    "prices": {
+      "midweek": 36.99,
+      "one_week": 47.99,
+      "two_weeks": 62.99,
+      "three_weeks": 74.99
+    },
+    "dimensions": "127 x 78 x 34 cm"
+  },
+  {
+    "id": 2,
+    "title": "Thule Pacific 500",
+    "prices": {
+      "midweek": 36.99,
+      "one_week": 47.99,
+      "two_weeks": 62.99,
+      "three_weeks": 74.99
+    },
+    "dimensions": "215 x 50 x 35 cm"
+  },
+  {
+    "id": 3,
+    "title": "Thule Motion XT M",
+    "prices": {
+      "midweek": 49.99,
+      "one_week": 64.99,
+      "two_weeks": 84.99,
+      "three_weeks": 99.99
+    },
+    "dimensions": "167 x 76 x 40 cm"
+  },
+  {
+    "id": 4,
+    "title": "Thule Touring L",
+    "prices": {
+      "midweek": 50.99,
+      "one_week": 67.99,
+      "two_weeks": 87.99,
+      "three_weeks": 99.99
+    },
+    "dimensions": "188 x 72 x 40 cm"
+  },
+  {
+    "id": 5,
+    "title": "Thule Force XT XL",
+    "prices": {
+      "midweek": 60.99,
+      "one_week": 79.99,
+      "two_weeks": 99.99,
+      "three_weeks": 119.99
+    },
+    "dimensions": "197 x 75 x 39 cm"
+  },
+  {
+    "id": 6,
+    "title": "Thule Motion XT XXL",
+    "prices": {
+      "midweek": 64.99,
+      "one_week": 83.99,
+      "two_weeks": 109.99,
+      "three_weeks": 129.99
+    },
+    "dimensions": "226 x 85 x 43 cm"
+  }
+]

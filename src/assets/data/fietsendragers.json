@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "title": "Thule ProRide 591",
+    "bikes": "1-3",
+    "prices": {
+      "midweek": 8.99,
+      "one_week": 14.99,
+      "two_weeks": 27.99,
+      "three_weeks": 39.99
+    }
+  },
+  {
+    "id": 2,
+    "title": "Thule VeloCompact",
+    "bikes": "1-4",
+    "prices": {
+      "midweek": 29.99,
+      "one_week": 39.99,
+      "two_weeks": 52.99,
+      "three_weeks": 64.99,
+      "extra": 9.99
+    }
+  }
+]

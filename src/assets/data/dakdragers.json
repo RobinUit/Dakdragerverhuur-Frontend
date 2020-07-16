@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Thule dakdrager",
+    "prices": {
+      "midweek": 24.99,
+      "one_week": 29.99,
+      "two_weeks": 39.99,
+      "three_weeks": 49.99
+    }
+  }
+]
