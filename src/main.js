@@ -8,7 +8,9 @@ import VueCurrencyFilter from "vue-currency-filter";
 import '@fortawesome/fontawesome-free/css/all.css'
 import Vuetify from "vuetify/lib";
 import VueNumberInput from '@chenfengyuan/vue-number-input';
+import Notifications from 'vue-notification'
 
+Vue.use(Notifications)
 Vue.use(Vuetify)
 Vue.use(VueNumberInput);
 Vue.use(VueCurrencyFilter, {

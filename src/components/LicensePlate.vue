@@ -4,9 +4,9 @@
       <input
         type="text"
         class="kentekenplaat"
-        v-model="licenseplate"
+        v-model="value.kenteken"
         maxlength="8"
-        name="kentekenplaat"
+        name="kenteken"
         @input="executeFormatLicensePlate()"
         @keyup.enter="getCarInformation()"
         @blur="getCarInformation()"
@@ -14,8 +14,8 @@
     </div>
     <div class="carInformation">
       <p id="info">
-        {{ info.merk }}
-        {{ info.handelsbenaming }}
+        {{ value.merk }}
+        {{ value.handelsbenaming }}
       </p>
       <div class="color" id="color"></div>
     </div>
@@ -25,68 +25,127 @@
 <script>
 import color from "../assets/colors.json";
 import ApiService from "../services/ApiService.js";
+import moment from "moment";
 
 export default {
   name: "LicensePlate",
-  data() {
-    return {
-      licenseplate: "",
-      info: {
-        merk: "",
-        handelsbenaming: "",
-      },
-    };
+  props: {
+    value: {
+      type: Object,
+      required: true,
+    },
+  },
+  watch: {
+    "value.kenteken": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "kenteken", this.value.kenteken);
+    },
+    "value.kleur": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "kleur", this.value.kleur);
+    },
+    "value.handelsbenaming": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(
+        null,
+        "handelsbenaming",
+        this.value.handelsbenaming
+      );
+    },
+    "value.inrichting": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "inrichting", this.value.inrichting);
+    },
+    "value.merk": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "merk", this.value.merk);
+    },
+    "value.eerste_afgifte_nl": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(
+        null,
+        "eerste_afgifte_nl",
+        this.value.eerste_afgifte_nl
+      );
+    },
+    "value.aantal_deuren": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "aantal_deuren", this.value.aantal_deuren);
+    },
+  },
+  mounted() {
+    if (this.value.kleur) {
+      document.getElementById("color").style.display = "block";
+      document.getElementById("color").style.backgroundColor =
+        color[(this.value.kleur).toUpperCase()];
+    }
   },
   methods: {
     getCarInformation() {
-      var plate = this.licenseplate.replace(/-/g, "");
+      var plate = this.value.kenteken.replace(/-/g, "");
 
       if (plate.length != 6) {
-        this.info.merk = "";
-        this.info.handelsbenaming = "";
+        this.value.merk = "";
+        this.value.handelsbenaming = "";
         document.getElementById("color").style.display = "none";
         return;
       }
       ApiService.getRequest(process.env.VUE_APP_API_URL + "rdw/" + plate).then(
         (data) => {
           if (data.length == 0) {
-            this.info.merk = "Geen geldig kenteken";
-            this.info.handelsbenaming = "";
+            this.value.merk = "Geen geldig kenteken";
+            this.value.handelsbenaming = "";
             document.getElementById("color").style.display = "none";
             return;
           }
-          this.info.merk = this.formatText(data[0].merk);
-          this.info.handelsbenaming = this.formatText(
-            this.checkSubString(data[0].handelsbenaming)
-          );
+
+          this.getAndSetAllVariables(data);
+
           document.getElementById("color").style.display = "block";
           document.getElementById("color").style.backgroundColor =
             color[data[0].eerste_kleur];
         }
       );
     },
+    getAndSetAllVariables(data) {
+      var carData = data[0];
+
+      this.value.merk = this.formatText(carData.merk);
+      this.value.handelsbenaming = this.formatText(
+        this.checkSubString(carData.handelsbenaming)
+      );
+      this.value.kleur = this.formatText(carData.eerste_kleur);
+      this.value.aantal_deuren = this.formatText(carData.aantal_deuren);
+      this.value.eerste_afgifte_nl = this.formatDate(
+        carData.datum_eerste_afgifte_nederland
+      );
+      this.value.inrichting = this.formatText(carData.inrichting);
+    },
     checkSubString(text) {
-      if (text.includes(this.info.merk.toUpperCase())) {
-        return text.replace(this.info.merk.toUpperCase(), "").trim();
+      if (text.includes(this.value.merk.toUpperCase())) {
+        return text.replace(this.value.merk.toUpperCase(), "").trim();
       }
       return text;
     },
     formatText(text) {
       return text.charAt(0) + text.slice(1).toLowerCase();
     },
-    executeFormatLicensePlate() {
-      this.licenseplate = this.formatLicenseplate(this.licenseplate);
+    formatDate(date) {
+      return moment(date, "YYYYMMDD").format("DD-MM-YYYY");
     },
-    formatLicenseplate(licencePlate) {
-      licencePlate = licencePlate.replace(/-/g, "").toUpperCase();
+    executeFormatLicensePlate() {
+      this.value.kenteken = this.formatLicenseplate(this.value.kenteken);
+    },
+    formatLicenseplate(licensePlate) {
+      licensePlate = licensePlate.replace(/-/g, "").toUpperCase();
 
-      // licencePlates for diplomates should not be formatted
-      var diplomateLicencePlateRegex = /^CD[ABFJNST]\d{1,3}$/; //for example: CDB1 of CDJ45
-      if (licencePlate.match(diplomateLicencePlateRegex)) {
-        return licencePlate;
+      // licensePlates for diplomates should not be formatted
+      var diplomatelicensePlateRegex = /^CD[ABFJNST]\d{1,3}$/; //for example: CDB1 of CDJ45
+      if (licensePlate.match(diplomatelicensePlateRegex)) {
+        return licensePlate;
       }
 
-      var licencePlateRegexes = [
+      var licensePlateRegexes = [
         /^([A-Z]{2})(\d{2})(\d{2})$/, // 1     XX-99-99    (since 1951)
         /^(\d{2})(\d{2})([A-Z]{2})$/, // 2     99-99-XX    (since 1965)
         /^(\d{2})([A-Z]{2})(\d{2})$/, // 3     99-XX-99    (since 1973)
@@ -101,19 +160,19 @@ export default {
         /^([A-Z]{1})(\d{2})([A-Z]{3})$/, // 12    X-99-XXX
         /^(\d{1})([A-Z]{2})(\d{3})$/, // 13    9-XX-999
         /^(\d{3})([A-Z]{2})(\d{1})$/, // 14    999-XX-9
-        /^(\d{3})(\d{2})([A-Z]{1})$/, //       999-99-X
-        /^([A-Z]{3})(\d{2})(\d{1})$/, //       XXX-99-9
-        /^([A-Z]{3})([A-Z]{2})(\d{1})$/, //       XXX-XX-9
+        /^(\d{3})(\d{2})([A-Z]{1})$/, // 15    999-99-X
+        /^([A-Z]{3})(\d{2})(\d{1})$/, // 16    XXX-99-9
+        /^([A-Z]{3})([A-Z]{2})(\d{1})$/, // 17    XXX-XX-9
       ];
 
       var i;
 
-      for (i in licencePlateRegexes) {
-        if (licencePlate.match(licencePlateRegexes[i])) {
-          return licencePlate.replace(licencePlateRegexes[i], "$1-$2-$3");
+      for (i in licensePlateRegexes) {
+        if (licensePlate.match(licensePlateRegexes[i])) {
+          return licensePlate.replace(licensePlateRegexes[i], "$1-$2-$3");
         }
       }
-      return licencePlate;
+      return licensePlate;
     },
   },
 };

@@ -51,7 +51,7 @@
                 </ul>
               </div>
               <div class="reserve">
-                <button>{{ $t("rents.reserve") }}</button>
+                <button @click="reservePage(dakdrager.id)">{{ $t("rents.reserve") }}</button>
               </div>
             </div>
           </v-expansion-panel-content>
@@ -63,6 +63,8 @@
 
 <script>
 import DAKDRAGER_JSON from "../assets/data/dakdragers.json";
+import router from "../router";
+import ReserverationService from "../services/ReserverationService";
 
 export default {
   name: "AppHuurprijzen",
@@ -86,6 +88,11 @@ export default {
         /\.jpg$/
       );
       return images("./" + id + ".jpg");
+    },
+    reservePage(product) {
+      ReserverationService.updateData("dakdrager", product);
+      ReserverationService.saveDataToLocalStorage();
+      router.push("/reserveren");
     },
   },
 };

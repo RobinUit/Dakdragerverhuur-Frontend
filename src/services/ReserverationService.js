@@ -1,36 +1,30 @@
 import ApiService from "./ApiService.js";
+import ValidateDataService from "./ValidateDataService.js";
 
 let data = {
   naam: "",
   email: "",
   telefoonnummer: "",
-  kenteken: "",
-  van: "",
-  tot: "",
-  dakdrager: "",
-  dakkoffer: "",
-  fietsendrager: "",
-  aantal: "",
+  date: [],
   opmerking: "",
+  kenteken: "",
   merk: "",
   handelsbenaming: "",
   eerste_afgifte_nl: "",
   aantal_deuren: "",
   inrichting: "",
+  kleur: "",
+  dakdrager: "none",
+  dakkoffer: "none",
+  fietsendrager: "none",
+  aantal_fietsen: 0,
 };
 
 Object.preventExtensions(data);
 
 export default new (class ReservationService {
   saveDataToLocalStorage() {
-      console.log(data);
-      
     localStorage.setItem("data", JSON.stringify(data));
-  }
-
-  getDataFromLocalStorage() {
-    data = JSON.parse(localStorage.getItem("data"));
-    return data;
   }
 
   clearLocalStorage() {
@@ -38,20 +32,34 @@ export default new (class ReservationService {
   }
 
   sendDataToAPI() {
-    ApiService.postRequest("https://localhost:3000/form", data).then(
-      (response) => {
-        console.log(response);
-      }
-    );
+    return ApiService.postRequest("http://localhost:3000/form", data);
   }
 
   resetData() {
     for (var key in data) {
+      const exceptions = ["fietsendrager", "dakdrager", "dakkoffer"];
+      if (key == "date") {
+        data[key] = [];
+        return;
+      }
+      if (exceptions.includes(key)) {
+        data[key] = "none";
+        return;
+      }
+      if (key == "aantal_fietsen") {
+        data[key] = 0;
+        return;
+      }
       data[key] = "";
     }
   }
 
   getData() {
+    let storedData = JSON.parse(localStorage.getItem("data"));
+    if (!storedData) {
+      return data;
+    }
+    data = storedData;
     return data;
   }
 
@@ -65,5 +73,9 @@ export default new (class ReservationService {
 
   removeData(key) {
     data[key] = "";
+  }
+
+  validateData() {
+    ValidateDataService.validateData(data);
   }
 })();

@@ -82,7 +82,9 @@
                 </ul>
               </div>
               <div class="reserve">
-                <button>{{ $t("rents.reserve") }}</button>
+                <button @click="reservePage(dakkoffer.id)">
+                  {{ $t("rents.reserve") }}
+                </button>
               </div>
             </div>
           </v-expansion-panel-content>
@@ -94,13 +96,15 @@
 
 <script>
 import DAKKOFFER_JSON from "../assets/data/dakkoffers.json";
+import router from '../router';
+import ReserverationService from '../services/ReserverationService';
 
 export default {
   name: "AppHuurprijzen",
   data() {
     return {
       dakkoffers: DAKKOFFER_JSON,
-      panel: [0]
+      panel: [0],
     };
   },
   filters: {
@@ -117,6 +121,11 @@ export default {
         /\.jpg$/
       );
       return images("./" + id + ".jpg");
+    },
+    reservePage(product) {
+      ReserverationService.updateData("dakkoffer", product);
+      ReserverationService.saveDataToLocalStorage();
+      router.push("/reserveren");
     },
   },
 };

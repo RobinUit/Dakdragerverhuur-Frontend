@@ -50,17 +50,17 @@
         <DatePicker v-model="formData" />
         <ProductSelector
           :products="dakdragers"
-          :type="Dakdragers"
+          type="dakdrager"
           v-model="formData"
         ></ProductSelector>
         <ProductSelector
           :products="dakkoffers"
-          :type="Dakkoffer"
+          type="dakkoffer"
           v-model="formData"
         ></ProductSelector>
         <ProductSelector
           :products="fietsendragers"
-          :type="Fietsendrager"
+          type="fietsendrager"
           v-model="formData"
         ></ProductSelector>
         <div class="field">
@@ -100,11 +100,7 @@ export default {
     ProductSelector,
   },
   beforeMount() {
-    var data = ReservationService.getDataFromLocalStorage();
-    this.formData.naam = data.naam;
-    this.formData.email = data.email;
-    this.formData.telefoonnummer = data.telefoonnummer;
-    this.formData.opmerking = data.opmerking;
+    this.formData = ReservationService.getData();
 
     window.onbeforeunload = closingCode;
     function closingCode() {
@@ -125,31 +121,44 @@ export default {
         naam: "",
         email: "",
         telefoonnummer: "",
+        date: [],
         opmerking: "",
         kenteken: "",
-        van: "",
-        tot: "",
+        merk: "",
+        handelsbenaming: "",
+        eerste_afgifte_nl: "",
+        aantal_deuren: "",
+        inrichting: "",
+        kleur: "",
         dakdrager: "none",
         dakkoffer: "none",
         fietsendrager: "none",
-        aantal: "",
+        aantal_fietsen: 0,
       },
     };
   },
 
   methods: {
     submitForm() {
-      for (var value in this.formData) {
-        ReservationService.updateData(value, this.formData[value]);
+      if (ReservationService.validateData()) {
+        ReservationService.sendDataToAPI()
+          .then(() => {
+            ReservationService.clearLocalStorage();
+            ReservationService.resetData();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-      ReservationService.saveDataToLocalStorage();
     },
-    updateData(e) {
-      ReservationService.updateData(e.target.name, e.target.value);
+    updateData(event, value, key) {
+      if (!event) {
+        ReservationService.updateData(value, key);
+        return;
+      }
+      ReservationService.updateData(event.target.name, event.target.value);
     },
     saveData() {
-      console.log("saved");
-
       ReservationService.saveDataToLocalStorage();
     },
   },

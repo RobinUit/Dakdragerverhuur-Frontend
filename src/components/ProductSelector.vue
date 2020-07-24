@@ -1,9 +1,9 @@
 <template>
   <div class="options">
-    <label :for="type">{{ type }}</label>
+    <label class="header" :for="type">{{ type }}</label>
     <select
       :name="type"
-      v-model="selected"
+      v-model="value[type]"
       @change="checkUpdate(type)"
       class="select"
     >
@@ -18,12 +18,12 @@
     <transition name="fadeHeight">
       <div
         class="optional"
-        v-if="type == 'Fietsendrager' && selected != 'none'"
+        v-if="type == 'fietsendrager' && value[type] != 'none'"
       >
-        <label for="amount">Aantal fietsen ({{ amountOfBikes }})</label>
+        <label for="amount">Aantal fietsen ({{ totalBikes }})</label>
         <number-input
-          v-model="currentValue"
-          :min="minValue"
+          v-model="value.aantal_fietsen"
+          :min="1"
           :max="maxValue"
           center
           controls
@@ -36,28 +36,67 @@
 <script>
 export default {
   name: "ProductSelector",
-  props: ["products", "type", "selected", "amountOfBikes"],
+  props: {
+    value: {
+      type: Object,
+      required: true,
+    },
+    products: Array,
+    type: String,
+  },
+  watch: {
+    "value.dakdrager": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "dakdrager", this.value.dakdrager);
+    },
+    "value.dakkoffer": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "dakkoffer", this.value.dakkoffer);
+    },
+    "value.fietsendrager": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "fietsendrager", this.value.fietsendrager);
+    },
+    "value.aantal_fietsen": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(
+        null,
+        "aantal_fietsen",
+        this.value.aantal_fietsen
+      );
+    },
+  },
   data() {
     return {
-      minValue: 0,
       maxValue: 0,
-      currentValue: 0,
+      totalBikes: 0,
     };
   },
+  mounted() {
+    if (this.type == "fietsendrager") {
+      this.checkUpdate(this.type);
+    }
+  },
   methods: {
-    checkUpdate(type) {      
-      if (this.selected == "none" || type != "Fietsendrager") {        
+    checkUpdate(type) {
+      if (this.value[type] == "none" || type != "fietsendrager") {
         return;
-      }      
-      this.getBikeInfo();
+      }
+      this.getBikeInfo(type);
     },
-    getBikeInfo() {
-      let values = this.products[this.selected - 1].bikes;
-      this.amountOfBikes = values;
+    getBikeInfo(type) {
+      let values = this.products[this.value[type] - 1].bikes;
+      this.totalBikes = values;
       values = values.split("-");
-      this.minValue = parseInt(values[0]);
       this.maxValue = parseInt(values[1]);
-      this.currentValue = this.minValue;
+
+
+      if (
+        this.value.aantal_fietsen === 0 ||
+        this.value.aantal_fietsen > this.maxValue
+      ) {
+        this.value.aantal_fietsen = 1;
+      }
     },
   },
 };
@@ -70,6 +109,10 @@ export default {
 
 .options {
   margin: 30px 0;
+
+  .header {
+    text-transform: capitalize;
+  }
 
   label {
     display: inline-block;

@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     navigate: function() {
-      router.push("home");
+      router.push("home").catch(() => {});
     },
   },
 };

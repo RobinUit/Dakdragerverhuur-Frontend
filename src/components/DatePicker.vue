@@ -2,7 +2,7 @@
   <v-dialog
     ref="dialog"
     v-model="modal"
-    :return-value.sync="picker"
+    :return-value.sync="value.date"
     width="290px"
   >
     <template v-slot:activator="{ on }">
@@ -20,6 +20,7 @@
       v-model="value.date"
       first-day-of-week="0"
       locale="nl"
+      name="date"
       range
       :min="minDate"
       :allowed-dates="allowedDates"
@@ -27,7 +28,9 @@
     >
       <v-spacer></v-spacer>
       <v-btn text color="primary" @click="modal = false">Annuleren</v-btn>
-      <v-btn text color="primary" @click="$refs.dialog.save(picker)">OK</v-btn>
+      <v-btn text color="primary" @click="$refs.dialog.save(value.date)"
+        >OK</v-btn
+      >
     </v-date-picker>
   </v-dialog>
 </template>
@@ -36,21 +39,22 @@
 import moment from "moment";
 
 export default {
+  name: "DatePicker",
   props: {
     value: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   watch: {
-    value() {
-      this.$emit('input', this.value)
-    }
+    "value.date": function() {
+      this.$emit("input", this.value);
+      this.$parent.updateData(null, "date", this.value.date);
+    },
   },
   data() {
     return {
       modal: false,
-      picker: [],
       availableDates: "",
     };
   },
@@ -60,19 +64,22 @@ export default {
       return this.formatDate(today);
     },
     dateRangeText() {
-      if (this.picker[0] > this.picker[1]) {
+      if (this.value.date[0] > this.value.date[1]) {
         this.reverseDates();
       }
-      if (this.picker == 0) {
+      if (this.value.date == 0) {
         return "";
-      } else if (this.picker.length == 1 || this.picker[0] == this.picker[1]) {
-        return this.formatPickerDate(this.picker[0]);
+      } else if (
+        this.value.date.length == 1 ||
+        this.value.date[0] == this.value.date[1]
+      ) {
+        return this.formatPickerDate(this.value.date[0]);
       }
       return (
         "Van " +
-        this.formatPickerDate(this.picker[0]) +
+        this.formatPickerDate(this.value.date[0]) +
         " tot " +
-        this.formatPickerDate(this.picker[1])
+        this.formatPickerDate(this.value.date[1])
       );
     },
   },
@@ -113,7 +120,7 @@ export default {
     },
 
     reverseDates() {
-      this.picker = this.picker.reverse();
+      this.value.date = this.value.date.reverse();
     },
 
     allowedDates: (date) => {

@@ -83,7 +83,7 @@
                 </ul>
               </div>
               <div class="reserve">
-                <button @click="reservePage(fietsendrager.title)">{{ $t("rents.reserve") }}</button>
+                <button @click="reservePage(fietsendrager.id)">{{ $t("rents.reserve") }}</button>
               </div>
             </div>
           </v-expansion-panel-content>
@@ -96,6 +96,7 @@
 <script>
 import FIETSENDRAGER_JSON from "../assets/data/fietsendragers.json";
 import router from '../router';
+import ReserverationService from '../services/ReserverationService';
 
 export default {
   name: "AppHuurprijzen",
@@ -121,7 +122,8 @@ export default {
       return images("./" + id + ".jpg");
     },
     reservePage(product) {
-      console.log(product);
+      ReserverationService.updateData("fietsendrager", product)
+      ReserverationService.saveDataToLocalStorage();
       router.push('/reserveren');
     }
   },
