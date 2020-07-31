@@ -3,12 +3,10 @@
     <div class="headerElements">
       <div class="mobileNavigation">
         <nav>
-          <router-link to="/">{{ $t("nav.home") }}</router-link>
-          <router-link to="/huurprijzen">{{
-            $t("nav.rents.title")
-          }}</router-link>
-          <router-link to="/reserveren">{{ $t("nav.reserve") }}</router-link>
-          <router-link to="/contact">{{ $t("nav.contact") }}</router-link>
+          <router-link to="/">Home</router-link>
+          <router-link to="/huurprijzen">Huurprijzen</router-link>
+          <router-link to="/reserveren">Reserveren</router-link>
+          <router-link to="/contact">Contact</router-link>
         </nav>
       </div>
       <div class="desktopNavigation">
@@ -16,35 +14,26 @@
           <h1>Dakdragerverhuur.nl</h1>
         </div>
         <nav>
-          <router-link to="/home"
-            ><p>{{ $t("nav.home") }}</p></router-link
-          >
+          <router-link to="/home"><p>Home</p></router-link>
           <div class="dropdown">
             <router-link to="/huurprijzen" class="drop"
-              ><p class="drop">{{ $t("nav.rents.title") }}▼</p></router-link
+              ><p class="drop">Huurprijzen▼</p></router-link
             >
             <div class="dropdown-content">
               <router-link to="/huurprijzen/dakdragers"
-                ><p>{{ $t("nav.rents.cargo_racks") }}</p></router-link
+                ><p>Dakdragers</p></router-link
               >
               <router-link to="/huurprijzen/dakkoffers"
-                ><p>{{ $t("nav.rents.cargo_carriers") }}</p>
+                ><p>Dakkoffers</p>
               </router-link>
               <router-link to="/huurprijzen/fietsendragers"
-                ><p>{{ $t("nav.rents.bike_racks") }}</p></router-link
+                ><p>Fietsendragers</p></router-link
               >
             </div>
           </div>
-          <router-link to="/reserveren"
-            ><p>{{ $t("nav.reserve") }}</p></router-link
-          >
-          <router-link to="/contact"
-            ><p>{{ $t("nav.contact") }}</p></router-link
-          >
+          <router-link to="/reserveren"><p>Reserveren</p></router-link>
+          <router-link to="/contact"><p>Contact</p></router-link>
         </nav>
-        <div class="localization">
-          <LocaleSwitcher />
-        </div>
       </div>
     </div>
   </header>
@@ -52,13 +41,9 @@
 
 <script>
 import router from "../../router";
-import LocaleSwitcher from "../LocaleSwitcher.vue";
 
 export default {
   name: "AppHeader",
-  components: {
-    LocaleSwitcher,
-  },
   methods: {
     navigate: function() {
       router.push("home").catch(() => {});

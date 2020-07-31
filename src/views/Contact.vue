@@ -3,8 +3,8 @@
     <div class="contactBox">
       <h1>Contact</h1>
       <br />
-      <p>{{ $t('contact.header')}}</p>
-      <p><strong>{{ $t('contact.info')}}</strong></p>
+      <p>Afhaal en montage adres</p>
+      <p><strong>LET OP alleen op afspraak geopend</strong></p>
       <br />
       <p>dakdragerverhuur.nl</p>
       <p>
@@ -18,7 +18,7 @@
         >
       </p>
       <br />
-      <p>{{ $t('contact.phone')}}: <a href="tel:+31681194541">06-81 19 45 41</a></p>
+      <p>Telefoon: <a href="tel:+31681194541">06-81 19 45 41</a></p>
       <br />
       <p>
         <a href="mailto:info@dakdragerverhuur.nl">info@dakdragerverhuur.nl</a>

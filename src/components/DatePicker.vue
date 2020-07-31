@@ -67,7 +67,7 @@ export default {
       if (this.value.date[0] > this.value.date[1]) {
         this.reverseDates();
       }
-      if (this.value.date == 0) {
+      if (this.value.date.length == 0) {
         return "";
       } else if (
         this.value.date.length == 1 ||

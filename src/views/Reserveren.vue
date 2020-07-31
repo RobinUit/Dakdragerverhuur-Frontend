@@ -87,10 +87,12 @@
 import LicensePlate from "../components/LicensePlate";
 import DatePicker from "../components/DatePicker";
 import ProductSelector from "../components/ProductSelector";
-import ReservationService from "../services/ReserverationService";
+import ReservationService from "../services/ReserverationService.js";
 import DAKDRAGER_JSON from "../assets/data/dakdragers.json";
 import DAKKOFFER_JSON from "../assets/data/dakkoffers.json";
 import FIETSENDRAGER_JSON from "../assets/data/fietsendragers.json";
+import AlertService from "../services/AlertService";
+import ReserverationService from "../services/ReserverationService.js";
 
 export default {
   name: "AppReserveren",
@@ -142,12 +144,17 @@ export default {
     submitForm() {
       if (ReservationService.validateData()) {
         ReservationService.sendDataToAPI()
-          .then(() => {
-            ReservationService.clearLocalStorage();
-            ReservationService.resetData();
+          .then((response) => {
+            if (response == "error") {
+              return;
+            }
+            this.formData = ReserverationService.resetForm();
+            AlertService.success("Je aanvraag is met succes ontvangen!");
           })
-          .catch((error) => {
-            console.log(error);
+          .catch(() => {
+            AlertService.error(
+              "Er is iets fout gegaan met het versturen van de gegevens. Probeer het later opnieuw"
+            );
           });
       }
     },
@@ -230,4 +237,17 @@ export default {
     }
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 </style>

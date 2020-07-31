@@ -8,11 +8,11 @@
     </div>
     <div class="reviews">
       <h1>
-        {{ $t("home.title") }}
+        Wat onze huurders zeggen:
       </h1>
       <RatingsCarousel />
       <p>
-        {{ $t("home.subtitle") }}
+        Lees meer dan 150 ervaringen met dakdragerverhuur op
         <a href="https://www.huren.nl/m3298/dakdragerverhuur-eu"
           ><b>www.huren.nl</b></a
         >

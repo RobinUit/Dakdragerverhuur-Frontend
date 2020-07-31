@@ -1,12 +1,11 @@
 <template>
   <div class="cargo_carriers">
     <div class="header">
-      <h1>
-        {{ $t("rents.cargo_carriers.title") }}
-      </h1>
+      <h1>Huur dakkoffers</h1>
       <p>
-        {{ $t("rents.subheader.one") }} <b>{{ $t("rents.subheader.two") }}</b>
-        {{ $t("rents.subheader.three") }}
+        Alle prijzen inclusief
+        <b>GRATIS</b>
+        montageservice en laagste-prijsgarantie.
       </p>
     </div>
     <div class="items">
@@ -18,13 +17,8 @@
         >
           <v-expansion-panel-header>
             <p>
-              <b>{{ dakkoffer.title }}</b> ({{
-                $t(
-                  "rents.cargo_carriers.cargo_carriers_list." +
-                    [index] +
-                    ".volume"
-                ) | formatSubheader
-              }})
+              <b>{{ dakkoffer.title }}</b>
+              ({{ dakkoffer.volume | formatSubheader }})
             </p>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -35,21 +29,21 @@
               <div class="prices">
                 <ul>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.midweek") }}</p>
+                    <p id="left">Lang weekend of midweek</p>
                     <p id="right">{{ dakkoffer.prices.midweek | currency }}</p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.one_week") }}</p>
+                    <p id="left">1 week</p>
                     <p id="right">{{ dakkoffer.prices.one_week | currency }}</p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.two_weeks") }}</p>
+                    <p id="left">2 weken</p>
                     <p id="right">
                       {{ dakkoffer.prices.two_weeks | currency }}
                     </p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.three_weeks") }}</p>
+                    <p id="left">3 weken</p>
                     <p id="right">
                       {{ dakkoffer.prices.three_weeks | currency }}
                     </p>
@@ -59,31 +53,19 @@
               <div class="information">
                 <ul>
                   <li>
-                    {{
-                      $t(
-                        "rents.cargo_carriers.cargo_carriers_list." +
-                          [index] +
-                          ".volume"
-                      )
-                    }}
+                    {{ dakkoffer.volume }}
                   </li>
                   <li>
-                    {{
-                      $t(
-                        "rents.cargo_carriers.cargo_carriers_list." +
-                          [index] +
-                          ".info"
-                      )
-                    }}
+                    {{ dakkoffer.info }}
                   </li>
                   <li>
-                    {{ $t("rents.measurements") }} {{ dakkoffer.dimensions }}
+                    Binnen afmetingen {{ dakkoffer.dimensions }}
                   </li>
                 </ul>
               </div>
               <div class="reserve">
                 <button @click="reservePage(dakkoffer.id)">
-                  {{ $t("rents.reserve") }}
+                  Reserveer direct
                 </button>
               </div>
             </div>
@@ -96,8 +78,8 @@
 
 <script>
 import DAKKOFFER_JSON from "../assets/data/dakkoffers.json";
-import router from '../router';
-import ReserverationService from '../services/ReserverationService';
+import router from "../router";
+import ReserverationService from "../services/ReserverationService";
 
 export default {
   name: "AppHuurprijzen",

@@ -6,6 +6,7 @@ export default new (class AlertService {
       group: "alert",
       type: "error",
       title: "Er is iets fout gegaan",
+      duration: 10000,
       text: message,
     });
   }
@@ -15,6 +16,7 @@ export default new (class AlertService {
       group: "alert",
       type: "warn",
       title: "Let op!",
+      duration: 5000,
       text: message,
     });
   }
@@ -24,6 +26,7 @@ export default new (class AlertService {
       group: "alert",
       type: "success",
       title: "Gelukt",
+      duration: 5000,
       text: message,
     });
   }
@@ -32,6 +35,7 @@ export default new (class AlertService {
     Vue.notify({
       group: "alert",
       type: "info",
+      duration: 5000,
       text: message,
     });
   }

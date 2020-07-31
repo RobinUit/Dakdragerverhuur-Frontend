@@ -7,6 +7,7 @@
         v-model="value.kenteken"
         maxlength="8"
         name="kenteken"
+        autocomplete="off"
         @input="executeFormatLicensePlate()"
         @keyup.enter="getCarInformation()"
         @blur="getCarInformation()"
@@ -26,6 +27,7 @@
 import color from "../assets/colors.json";
 import ApiService from "../services/ApiService.js";
 import moment from "moment";
+import AlertService from '../services/AlertService';
 
 export default {
   name: "LicensePlate",
@@ -77,7 +79,7 @@ export default {
     if (this.value.kleur) {
       document.getElementById("color").style.display = "block";
       document.getElementById("color").style.backgroundColor =
-        color[(this.value.kleur).toUpperCase()];
+        color[this.value.kleur.toUpperCase()];
     }
   },
   methods: {
@@ -87,14 +89,23 @@ export default {
       if (plate.length != 6) {
         this.value.merk = "";
         this.value.handelsbenaming = "";
+        this.value.kleur = "";
+        this.value.eerste_afgifte_nl = "";
+        this.value.inrichting = "";
+        this.value.aantal_deuren = "";
         document.getElementById("color").style.display = "none";
         return;
       }
-      ApiService.getRequest(process.env.VUE_APP_API_URL + "rdw/" + plate).then(
+      ApiService.getRequest(process.env.VUE_APP_API_URL + "/rdw/" + plate).then(
         (data) => {
-          if (data.length == 0) {
-            this.value.merk = "Geen geldig kenteken";
+          if (!data || data.length == 0) {
+            AlertService.warning("Onbekend kenteken");
+            this.value.merk = "Geen informatie gevonden";
             this.value.handelsbenaming = "";
+            this.value.kleur = "";
+            this.value.eerste_afgifte_nl = "";
+            this.value.inrichting = "";
+            this.value.aantal_deuren = "";
             document.getElementById("color").style.display = "none";
             return;
           }

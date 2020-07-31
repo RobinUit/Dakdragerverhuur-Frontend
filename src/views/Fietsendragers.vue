@@ -1,12 +1,11 @@
 <template>
   <div class="bike_racks">
     <div class="header">
-      <h1>
-        {{ $t("rents.bike_racks.title") }}
-      </h1>
+      <h1>Huur dakkoffers</h1>
       <p>
-        {{ $t("rents.subheader.one") }} <b>{{ $t("rents.subheader.two") }}</b>
-        {{ $t("rents.subheader.three") }}
+        Alle prijzen inclusief
+        <b>GRATIS</b>
+        montageservice en laagste-prijsgarantie.
       </p>
     </div>
     <div class="items">
@@ -17,9 +16,7 @@
         >
           <v-expansion-panel-header>
             <p>
-              <b>{{ fietsendrager.title }}</b> ({{
-                $t("rents.bike_racks.bike_racks_list." + [index] + ".subtitle")
-              }})
+              <b>{{ fietsendrager.title }}</b> ({{ fietsendrager.subtitle }})
             </p>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -30,25 +27,25 @@
               <div class="prices">
                 <ul>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.midweek") }}</p>
+                    <p id="left">Lang weekend of midweek</p>
                     <p id="right">
                       {{ fietsendrager.prices.midweek | currency }}
                     </p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.one_week") }}</p>
+                    <p id="left">1 week</p>
                     <p id="right">
                       {{ fietsendrager.prices.one_week | currency }}
                     </p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.two_weeks") }}</p>
+                    <p id="left">2 weken</p>
                     <p id="right">
                       {{ fietsendrager.prices.two_weeks | currency }}
                     </p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.three_weeks") }}</p>
+                    <p id="left">3 weken</p>
                     <p id="right">
                       {{ fietsendrager.prices.three_weeks | currency }}
                     </p>
@@ -58,32 +55,20 @@
               <div class="information">
                 <ul>
                   <li>
-                    {{
-                      $t(
-                        "rents.bike_racks.bike_racks_list." +
-                          [index] +
-                          ".info.one"
-                      )
-                    }}
+                    {{ fietsendrager.info.one }}
                   </li>
                   <li>
-                    {{
-                      $t(
-                        "rents.bike_racks.bike_racks_list." + [index] + ".info.two"
-                      )
-                    }}
+                    {{ fietsendrager.info.two }}
                   </li>
                   <li>
-                    {{
-                      $t(
-                        "rents.bike_racks.bike_racks_list." + [index] + ".info.three"
-                      )
-                    }}
+                    {{ fietsendrager.info.three }}
                   </li>
                 </ul>
               </div>
               <div class="reserve">
-                <button @click="reservePage(fietsendrager.id)">{{ $t("rents.reserve") }}</button>
+                <button @click="reservePage(fietsendrager.id)">
+                  Reserveer direct
+                </button>
               </div>
             </div>
           </v-expansion-panel-content>
@@ -95,8 +80,8 @@
 
 <script>
 import FIETSENDRAGER_JSON from "../assets/data/fietsendragers.json";
-import router from '../router';
-import ReserverationService from '../services/ReserverationService';
+import router from "../router";
+import ReserverationService from "../services/ReserverationService";
 
 export default {
   name: "AppHuurprijzen",
@@ -122,10 +107,10 @@ export default {
       return images("./" + id + ".jpg");
     },
     reservePage(product) {
-      ReserverationService.updateData("fietsendrager", product)
+      ReserverationService.updateData("fietsendrager", product);
       ReserverationService.saveDataToLocalStorage();
-      router.push('/reserveren');
-    }
+      router.push("/reserveren");
+    },
   },
 };
 </script>

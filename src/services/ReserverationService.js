@@ -1,5 +1,8 @@
 import ApiService from "./ApiService.js";
 import ValidateDataService from "./ValidateDataService.js";
+import DAKDRAGER_JSON from "../assets/data/dakdragers.json";
+import DAKKOFFER_JSON from "../assets/data/dakkoffers.json";
+import FIETSENDRAGER_JSON from "../assets/data/fietsendragers.json";
 
 let data = {
   naam: "",
@@ -32,17 +35,49 @@ export default new (class ReservationService {
   }
 
   sendDataToAPI() {
-    return ApiService.postRequest("http://localhost:3000/form", data);
+    return ApiService.postRequest(
+      process.env.VUE_APP_API_URL + "/form",
+      this.formatProductData()
+    );
   }
 
-  resetData() {
+  formatProductData() {
+    let dakdragers = DAKDRAGER_JSON;
+    let dakkoffers = DAKKOFFER_JSON;
+    let fietsendragers = FIETSENDRAGER_JSON;
+
+    let formattedData = Object.assign({}, data);
+
+    if (formattedData.dakdrager != "none") {
+      formattedData.dakdrager = dakdragers[formattedData.dakdrager - 1].title;
+    }
+
+    if (formattedData.dakkoffer != "none") {
+      formattedData.dakkoffer = dakkoffers[formattedData.dakkoffer - 1].title;
+    }
+
+    if (formattedData.fietsendrager != "none") {
+      formattedData.fietsendrager =
+        fietsendragers[formattedData.fietsendrager - 1].title;
+    }
+
+    if (formattedData.fietsendrager == "none") {
+      formattedData.aantal_fietsen = 0;
+    }
+
+    return formattedData;
+  }
+
+  resetForm() {
     for (var key in data) {
+      console.log(key);
       const exceptions = ["fietsendrager", "dakdrager", "dakkoffer"];
       if (key == "date") {
         data[key] = [];
         return;
       }
       if (exceptions.includes(key)) {
+        console.log(key);
         data[key] = "none";
         return;
       }
@@ -52,6 +87,9 @@ export default new (class ReservationService {
       }
       data[key] = "";
     }
+    this.saveDataToLocalStorage();
+
+    return this.getData();
   }
 
   getData() {
@@ -76,6 +114,6 @@ export default new (class ReservationService {
   }
 
   validateData() {
-    ValidateDataService.validateData(data);
+    return ValidateDataService.validateData(data);
   }
 })();

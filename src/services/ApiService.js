@@ -1,4 +1,5 @@
 import axios from "axios";
+import AlertService from "../services/AlertService";
 
 export default new (class ApiService {
   async getRequest(url) {
@@ -6,7 +7,14 @@ export default new (class ApiService {
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        AlertService.error(error.response.data.message);
+      } else if (error.request) {
+        AlertService.error(error.request);
+      } else {
+        AlertService.error("Er is iets fout gegaan");
+      }
+      return "error";
     }
   }
 
@@ -15,7 +23,14 @@ export default new (class ApiService {
       const response = await axios.post(url, data);
       return response;
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        AlertService.error(error.response.data.message);
+      } else if (error.request) {
+        AlertService.error(error.request);
+      } else {
+        AlertService.error("Er is iets fout gegaan");
+      }
+      return "error";
     }
   }
 })();

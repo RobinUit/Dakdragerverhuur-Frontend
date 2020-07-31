@@ -1,12 +1,11 @@
 <template>
   <div class="cargo_racks">
     <div class="header">
-      <h1>
-        {{ $t("rents.cargo_racks.title") }}
-      </h1>
+      <h1>Huur dakkoffers</h1>
       <p>
-        {{ $t("rents.subheader.one") }} <b>{{ $t("rents.subheader.two") }}</b>
-        {{ $t("rents.subheader.three") }}
+        Alle prijzen inclusief
+        <b>GRATIS</b>
+        montageservice en laagste-prijsgarantie.
       </p>
     </div>
     <div class="items">
@@ -29,21 +28,21 @@
               <div class="prices">
                 <ul>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.midweek") }}</p>
+                    <p id="left">Lang weekend of midweek</p>
                     <p id="right">{{ dakdrager.prices.midweek | currency }}</p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.one_week") }}</p>
+                    <p id="left">1 week</p>
                     <p id="right">{{ dakdrager.prices.one_week | currency }}</p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.two_weeks") }}</p>
+                    <p id="left">2 weken</p>
                     <p id="right">
                       {{ dakdrager.prices.two_weeks | currency }}
                     </p>
                   </li>
                   <li>
-                    <p id="left">{{ $t("rents.weeks.three_weeks") }}</p>
+                    <p id="left">3 weken</p>
                     <p id="right">
                       {{ dakdrager.prices.three_weeks | currency }}
                     </p>
@@ -51,7 +50,7 @@
                 </ul>
               </div>
               <div class="reserve">
-                <button @click="reservePage(dakdrager.id)">{{ $t("rents.reserve") }}</button>
+                <button @click="reservePage(dakdrager.id)">Reserveer direct</button>
               </div>
             </div>
           </v-expansion-panel-content>

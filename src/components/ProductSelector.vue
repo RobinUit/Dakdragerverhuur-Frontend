@@ -90,7 +90,6 @@ export default {
       values = values.split("-");
       this.maxValue = parseInt(values[1]);
 
-
       if (
         this.value.aantal_fietsen === 0 ||
         this.value.aantal_fietsen > this.maxValue

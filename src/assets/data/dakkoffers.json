@@ -8,7 +8,9 @@
       "two_weeks": 62.99,
       "three_weeks": 74.99
     },
-    "dimensions": "127 x 78 x 34 cm"
+    "dimensions": "127 x 78 x 34 cm",
+    "volume": "300 liter inhoud (4 weekendtassen)",
+    "info": "Opening aan beide kanten"
   },
   {
     "id": 2,
@@ -19,7 +21,9 @@
       "two_weeks": 62.99,
       "three_weeks": 74.99
     },
-    "dimensions": "215 x 50 x 35 cm"
+    "dimensions": "215 x 50 x 35 cm",
+    "volume": "330 liter inhoud (4 weekendtassen/4-5 paar ski's)",
+    "info": "Kan fietsendrager naast gemonteerd worden"
   },
   {
     "id": 3,
@@ -30,7 +34,9 @@
       "two_weeks": 84.99,
       "three_weeks": 99.99
     },
-    "dimensions": "167 x 76 x 40 cm"
+    "dimensions": "167 x 76 x 40 cm",
+    "volume": "400 liter inhoud (5 weekendtassen)",
+    "info": "Opening aan beide kanten"
   },
   {
     "id": 4,
@@ -41,7 +47,9 @@
       "two_weeks": 87.99,
       "three_weeks": 99.99
     },
-    "dimensions": "188 x 72 x 40 cm"
+    "dimensions": "188 x 72 x 40 cm",
+    "volume": "420 liter inhoud (5 weekendtassen/5 paar ski's)",
+    "info": "Opening aan beide kanten"
   },
   {
     "id": 5,
@@ -52,7 +60,9 @@
       "two_weeks": 99.99,
       "three_weeks": 119.99
     },
-    "dimensions": "197 x 75 x 39 cm"
+    "dimensions": "197 x 75 x 39 cm",
+    "volume": "500 liter inhoud (6 weekendtassen/8 paar ski's)",
+    "info": "Opening aan beide kanten"
   },
   {
     "id": 6,
@@ -63,6 +73,8 @@
       "two_weeks": 109.99,
       "three_weeks": 129.99
     },
-    "dimensions": "226 x 85 x 43 cm"
+    "dimensions": "226 x 85 x 43 cm",
+    "volume": "610 liter inhoud (7 weekendtassen/9 paar ski's)",
+    "info": "Opening aan beide kanten"
   }
 ]

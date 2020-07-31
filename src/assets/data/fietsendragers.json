@@ -8,6 +8,12 @@
       "one_week": 14.99,
       "two_weeks": 27.99,
       "three_weeks": 39.99
+    },
+    "subtitle": "1 fiets per drager",
+    "info": {
+      "one": "Afsluitbaar - vergrendelt de fiets naar de drager en de drager naar dakdrager",
+      "two": "voor fietsframes tot 100 mm (ovaal: 80x100 mm / rond: 22-80 mm)",
+      "three": "Automatisch en zelfstellend framehouder voor fietsen tot 20 kg"
     }
   },
   {
@@ -20,6 +26,12 @@
       "two_weeks": 52.99,
       "three_weeks": 64.99,
       "extra": 9.99
+    },
+    "subtitle": "voor 2, 3 of 4 fietsen",
+    "info": {
+      "one": "Kantelfunctie om makkelijk in de bagageruimte te komen terwijl de fietsendrager en fietsen gemonteerd zijn",
+      "two": "Afsluitbaar - vergrendelt de fietsen aan de drager en de drager aan de auto",
+      "three": "Maximaal gewicht per fiets 25 kg"
     }
   }
 ]

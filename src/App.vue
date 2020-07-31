@@ -7,8 +7,8 @@
       <notifications
         group="alert"
         classes="alert"
-        width="100%"
         position="bottom center"
+        width="500"
       />
     </v-app>
   </div>
@@ -41,7 +41,6 @@ export default {
 .alert {
   padding: 10px;
   margin: 0 5px 5px;
-  max-width: 500px;
 
   font-size: 14px;
 
