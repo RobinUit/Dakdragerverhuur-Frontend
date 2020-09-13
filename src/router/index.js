@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import AppHuurprijzen from "../views/Huurprijzen.vue"
+import AppHuurprijzen from "../views/Huurprijzen.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    redirect: "/home"
+    redirect: "/home",
   },
   {
     path: "/home",
@@ -16,28 +16,29 @@ const routes = [
     component: Home,
   },
   {
-    path: "/huurprijzen", component: AppHuurprijzen,
+    path: "/huurprijzen",
+    component: AppHuurprijzen,
     children: [
       {
         path: "",
-        redirect: "dakkoffers"
+        redirect: "dakkoffers",
       },
       {
         path: "dakkoffers",
         name: "Dakkoffers",
-        component: () => import("../views/Dakkoffers.vue")
+        component: () => import("../views/Dakkoffers.vue"),
       },
       {
         path: "fietsendragers",
         name: "Fietsendragers",
-        component: () => import("../views/Fietsendragers.vue")
+        component: () => import("../views/Fietsendragers.vue"),
       },
       {
         path: "dakdragers",
         name: "Dakdragers",
-        component: () => import("../views/Dakdragers.vue")
-      }
-    ]
+        component: () => import("../views/Dakdragers.vue"),
+      },
+    ],
   },
   {
     path: "/reserveren",
@@ -51,13 +52,16 @@ const routes = [
   },
   {
     path: "*",
-    redirect: "/home"
-  }
+    redirect: "/home",
+  },
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
 });
 
 export default router;

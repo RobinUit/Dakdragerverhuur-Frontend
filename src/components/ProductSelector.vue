@@ -1,20 +1,23 @@
 <template>
   <div class="options">
     <label class="header" :for="type">{{ type }}</label>
-    <select
-      :name="type"
-      v-model="value[type]"
-      @change="checkUpdate(type)"
-      class="select"
-    >
-      <option value="none">Nee</option>
-      <option
-        :value="product.id"
-        v-for="product in products"
-        v-bind:key="product.id"
-        >{{ product.title }}</option
+    <div class="dropdown">
+      <select
+        :name="type"
+        v-model="value[type]"
+        @change="checkUpdate(type)"
+        class="select"
       >
-    </select>
+        <option value="none">Nee</option>
+        <option
+          :value="product.id"
+          v-for="product in products"
+          v-bind:key="product.id"
+          >{{ product.title }}</option
+        >
+      </select>
+    </div>
+
     <transition name="fadeHeight">
       <div
         class="optional"
@@ -140,6 +143,25 @@ export default {
     height: 50px;
     padding: 5px 20px;
     cursor: pointer;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown:after {
+    content: "";
+    right: 20px;
+    top: 20px;
+    position: absolute;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin: 0 0 2px 0;
+
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
   }
 
   .optional {

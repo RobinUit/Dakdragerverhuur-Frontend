@@ -58,9 +58,7 @@
                   <li>
                     {{ dakkoffer.info }}
                   </li>
-                  <li>
-                    Binnen afmetingen {{ dakkoffer.dimensions }}
-                  </li>
+                  <li>Binnen afmetingen {{ dakkoffer.dimensions }}</li>
                 </ul>
               </div>
               <div class="reserve">
@@ -193,6 +191,35 @@ p {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             height: 35px;
             padding: 0 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .cargo_carriers {
+    .items {
+      .v-expansion-panel-content {
+        .left,
+        .right {
+          left: unset;
+          right: unset;
+          width: 100%;
+          margin: unset;
+        }
+
+        .left {
+          img {
+            max-width: 350px;
+          }
+        }
+
+        .right {
+          .information,
+          .reserve {
+            text-align: unset;
           }
         }
       }

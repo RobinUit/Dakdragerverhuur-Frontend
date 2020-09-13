@@ -46,7 +46,7 @@
             required
           />
         </div>
-        <LicensePlate v-model="formData" />
+        <LicensePlate v-model="formData" ref="license" />
         <DatePicker v-model="formData" />
         <ProductSelector
           :products="dakdragers"
@@ -74,9 +74,17 @@
           />
         </div>
         <div class="reserve">
-          <button @click="submitForm()" type="button">
+          <button @click="submitForm()" type="button" v-if="!isLoading">
             Verstuur
           </button>
+          <div class="loading" v-if="isLoading">
+            <v-progress-circular
+              indeterminate
+              :size="20"
+              :width="3"
+              color="white"
+            ></v-progress-circular>
+          </div>
         </div>
       </form>
     </div>
@@ -102,7 +110,11 @@ export default {
     ProductSelector,
   },
   beforeMount() {
-    this.formData = ReservationService.getData();
+    let data = ReserverationService.getData();
+
+    if (data) {
+      this.formData = data;
+    }
 
     window.onbeforeunload = closingCode;
     function closingCode() {
@@ -119,6 +131,7 @@ export default {
       dakdragers: DAKDRAGER_JSON,
       dakkoffers: DAKKOFFER_JSON,
       fietsendragers: FIETSENDRAGER_JSON,
+      isLoading: false,
       formData: {
         naam: "",
         email: "",
@@ -128,7 +141,7 @@ export default {
         kenteken: "",
         merk: "",
         handelsbenaming: "",
-        eerste_afgifte_nl: "",
+        eerste_afgifte: "",
         aantal_deuren: "",
         inrichting: "",
         kleur: "",
@@ -142,20 +155,23 @@ export default {
 
   methods: {
     submitForm() {
+      this.isLoading = true;
+
       if (ReservationService.validateData()) {
         ReservationService.sendDataToAPI()
-          .then((response) => {
-            if (response == "error") {
-              return;
-            }
+          .then(() => {
             this.formData = ReserverationService.resetForm();
-            AlertService.success("Je aanvraag is met succes ontvangen!");
-          })
-          .catch(() => {
-            AlertService.error(
-              "Er is iets fout gegaan met het versturen van de gegevens. Probeer het later opnieuw"
+            this.$refs.license.resetColor();
+            AlertService.alert(
+              "success",
+              "Je aanvraag is met succes ontvangen!"
             );
+          })
+          .finally(() => {
+            this.isLoading = false;
           });
+      } else {
+        this.isLoading = false;
       }
     },
     updateData(event, value, key) {
@@ -222,7 +238,11 @@ export default {
   }
 
   .reserve {
-    button {
+    width: 100%;
+    max-width: 200px;
+    button,
+    .loading {
+      width: 100%;
       line-height: 35px;
       cursor: pointer;
       border: none;
@@ -234,6 +254,9 @@ export default {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       height: 35px;
       padding: 0 30px;
+    }
+    .loading {
+      cursor: not-allowed;
     }
   }
 }
@@ -249,5 +272,11 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
-
+@media only screen and (max-width: 750px) {
+  .reserve {
+    .reservationForm {
+      padding: 1px 20px;
+    }
+  }
+}
 </style>

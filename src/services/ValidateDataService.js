@@ -17,7 +17,7 @@ export default new (class ValidateDataService {
       "merk",
       "inrichting",
       "handelsbenaming",
-      "eerste_afgifte_nl",
+      "eerste_afgifte",
       "aantal_deuren",
       "kleur",
       "aantal_fietsen",
@@ -41,7 +41,10 @@ export default new (class ValidateDataService {
         }
         allFields += entry + ", ";
       });
-      AlertService.error("1 of meer velden zijn niet ingevuld: " + allFields);
+      AlertService.alert(
+        "error",
+        "1 of meer velden zijn niet ingevuld: " + allFields
+      );
       return false;
     }
     return true;
@@ -54,11 +57,11 @@ export default new (class ValidateDataService {
     var regPhone = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
     if (!regMail.test(email)) {
-      AlertService.error("Vul een geldig e-mailadres in");
+      AlertService.alert("error", "Vul een geldig e-mailadres in");
       return false;
     }
     if (!regPhone.test(phonenumber)) {
-      AlertService.error("Vul een geldig telefoonnummer in");
+      AlertService.alert("error", "Vul een geldig telefoonnummer in");
       return false;
     }
     return true;
@@ -66,7 +69,7 @@ export default new (class ValidateDataService {
 
   validateLength(kenteken) {
     if (kenteken.length != 8) {
-      AlertService.error("Kenteken is onjuist");
+      AlertService.alert("error", "Kenteken is onjuist");
       return false;
     }
     return true;
@@ -76,9 +79,12 @@ export default new (class ValidateDataService {
     if (
       data.dakkoffer == "none" &&
       data.fietsendrager == "none" &&
-      data.fietsendrager == "none"
+      data.dakdrager == "none"
     ) {
-      AlertService.error("Kies een dakdrager, dakkoffer of fietsendrager");
+      AlertService.alert(
+        "error",
+        "Kies een dakdrager, dakkoffer of fietsendrager"
+      );
       return false;
     }
     return true;

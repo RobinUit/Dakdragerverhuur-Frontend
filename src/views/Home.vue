@@ -13,15 +13,20 @@
       <RatingsCarousel />
       <p>
         Lees meer dan 150 ervaringen met dakdragerverhuur op
-        <a href="https://www.huren.nl/m3298/dakdragerverhuur-eu"
-          ><b>www.huren.nl</b></a
+        <a
+          href="https://www.huren.nl/m3298/dakdragerverhuur-eu"
+          target="_blank"
         >
+          <b>Huren.nl</b>
+        </a>
       </p>
-      <img
-        src="@/assets/images/overig/huren.png"
-        alt="Aanbevolen door huren.nl"
-        id="huren"
-      />
+      <a href="https://www.huren.nl/m3298/dakdragerverhuur-eu" target="_blank">
+        <img
+          src="@/assets/images/overig/huren.png"
+          alt="Aanbevolen door huren.nl"
+          id="huren"
+        />
+      </a>
     </div>
   </div>
 </template>
@@ -61,7 +66,7 @@ export default {
 
     #huren {
       width: 150px;
-      margin: 10px 0;
+      margin: 5px 0;
     }
   }
 }

@@ -1,42 +1,50 @@
 import Vue from "vue";
 
 export default new (class AlertService {
+  alert(type, message) {
+    if (!message || typeof message !== "string") {
+      return;
+    }
+    switch (type) {
+      case "error":
+        this.error(message);
+        break;
+      case "warning":
+        this.warning(message);
+        break;
+      case "success":
+        this.success(message);
+        break;
+      case "info":
+        this.info(message);
+        break;
+      default:
+        this.default(message);
+    }
+  }
   error(message) {
-    Vue.notify({
-      group: "alert",
-      type: "error",
-      title: "Er is iets fout gegaan",
-      duration: 10000,
-      text: message,
+    Vue.$toast.error(message, {
+      showCloseButtonOnHover: false,
     });
   }
 
   warning(message) {
-    Vue.notify({
-      group: "alert",
-      type: "warn",
-      title: "Let op!",
-      duration: 5000,
-      text: message,
-    });
+    Vue.$toast.warning(message);
   }
 
   success(message) {
-    Vue.notify({
-      group: "alert",
-      type: "success",
-      title: "Gelukt",
-      duration: 5000,
-      text: message,
+    Vue.$toast.success(message, {
+      hideProgressBar: false,
     });
   }
 
   info(message) {
-    Vue.notify({
-      group: "alert",
-      type: "info",
-      duration: 5000,
-      text: message,
+    Vue.$toast.info(message, {
+      hideProgressBar: false,
     });
+  }
+
+  default(message) {
+    Vue.$toast(message);
   }
 })();

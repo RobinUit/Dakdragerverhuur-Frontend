@@ -5,7 +5,7 @@
         type="text"
         class="kentekenplaat"
         v-model="value.kenteken"
-        maxlength="8"
+        maxlength="6"
         name="kenteken"
         autocomplete="off"
         @input="executeFormatLicensePlate()"
@@ -13,12 +13,11 @@
         @blur="getCarInformation()"
       />
     </div>
-    <div class="carInformation">
+    <div class="carInformation" id="border">
       <p id="info">
         {{ value.merk }}
         {{ value.handelsbenaming }}
       </p>
-      <div class="color" id="color"></div>
     </div>
   </div>
 </template>
@@ -27,7 +26,6 @@
 import color from "../assets/colors.json";
 import ApiService from "../services/ApiService.js";
 import moment from "moment";
-import AlertService from '../services/AlertService';
 
 export default {
   name: "LicensePlate",
@@ -62,12 +60,12 @@ export default {
       this.$emit("input", this.value);
       this.$parent.updateData(null, "merk", this.value.merk);
     },
-    "value.eerste_afgifte_nl": function() {
+    "value.eerste_afgifte": function() {
       this.$emit("input", this.value);
       this.$parent.updateData(
         null,
-        "eerste_afgifte_nl",
-        this.value.eerste_afgifte_nl
+        "eerste_afgifte",
+        this.value.eerste_afgifte
       );
     },
     "value.aantal_deuren": function() {
@@ -77,9 +75,8 @@ export default {
   },
   mounted() {
     if (this.value.kleur) {
-      document.getElementById("color").style.display = "block";
-      document.getElementById("color").style.backgroundColor =
-        color[this.value.kleur.toUpperCase()];
+      document.getElementById("border").style.border =
+        "6px solid " + color[this.value.kleur.toUpperCase()];
     }
   },
   methods: {
@@ -90,31 +87,29 @@ export default {
         this.value.merk = "";
         this.value.handelsbenaming = "";
         this.value.kleur = "";
-        this.value.eerste_afgifte_nl = "";
+        this.value.eerste_afgifte = "";
         this.value.inrichting = "";
         this.value.aantal_deuren = "";
-        document.getElementById("color").style.display = "none";
+        document.getElementById("border").style.border = "none";
         return;
       }
-      ApiService.getRequest(process.env.VUE_APP_API_URL + "/rdw/" + plate).then(
+      ApiService.getRequest("/rdw/" + plate).then(
         (data) => {
-          if (!data || data.length == 0) {
-            AlertService.warning("Onbekend kenteken");
+          if (!data || data.length == 0 || data == "error") {
             this.value.merk = "Geen informatie gevonden";
             this.value.handelsbenaming = "";
             this.value.kleur = "";
-            this.value.eerste_afgifte_nl = "";
+            this.value.eerste_afgifte = "";
             this.value.inrichting = "";
             this.value.aantal_deuren = "";
-            document.getElementById("color").style.display = "none";
+            document.getElementById("border").style.border = "none";
             return;
           }
 
           this.getAndSetAllVariables(data);
 
-          document.getElementById("color").style.display = "block";
-          document.getElementById("color").style.backgroundColor =
-            color[data[0].eerste_kleur];
+          document.getElementById("border").style.border =
+            "solid 6px " + color[data[0].eerste_kleur];
         }
       );
     },
@@ -127,8 +122,8 @@ export default {
       );
       this.value.kleur = this.formatText(carData.eerste_kleur);
       this.value.aantal_deuren = this.formatText(carData.aantal_deuren);
-      this.value.eerste_afgifte_nl = this.formatDate(
-        carData.datum_eerste_afgifte_nederland
+      this.value.eerste_afgifte = this.formatDate(
+        carData.datum_eerste_toelating
       );
       this.value.inrichting = this.formatText(carData.inrichting);
     },
@@ -137,6 +132,10 @@ export default {
         return text.replace(this.value.merk.toUpperCase(), "").trim();
       }
       return text;
+    },
+    resetColor() {
+      this.value.kleur = "";
+      document.getElementById("border").style.border = "none";
     },
     formatText(text) {
       return text.charAt(0) + text.slice(1).toLowerCase();
@@ -224,8 +223,8 @@ export default {
     background-color: #f0f6ff;
     border-radius: 15px;
     margin: 0 10px;
-    padding: 10px;
-    min-height: 100px;
+    padding: 10px 5px;
+    min-height: 120px;
     position: relative;
     text-align: center;
     display: flex;

@@ -1,36 +1,42 @@
 import axios from "axios";
-import AlertService from "../services/AlertService";
+import AlertService from "./AlertService";
+
+const apiURL = "https://api.uitbeijerse.eu/dakdragerverhuur";
 
 export default new (class ApiService {
   async getRequest(url) {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(apiURL + url);
       return response.data;
     } catch (error) {
-      if (error.response) {
-        AlertService.error(error.response.data.message);
-      } else if (error.request) {
-        AlertService.error(error.request);
-      } else {
-        AlertService.error("Er is iets fout gegaan");
-      }
-      return "error";
+      this.handleErrors(error);
     }
   }
 
   async postRequest(url, data) {
     try {
-      const response = await axios.post(url, data);
-      return response;
+      const response = await axios.post(apiURL + url, data);
+      return response.data;
     } catch (error) {
-      if (error.response) {
-        AlertService.error(error.response.data.message);
-      } else if (error.request) {
-        AlertService.error(error.request);
-      } else {
-        AlertService.error("Er is iets fout gegaan");
+      this.handleErrors(error);
+    }
+  }
+
+  handleErrors(error) {
+    if (error.response) {
+      if (error.response.data.message.includes("kenteken")) {
+        AlertService.alert("warning", error.response.data.message);
+        return;
       }
-      return "error";
+      AlertService.alert(
+        error.response.data.status,
+        error.response.data.message
+      );
+    } else {
+      AlertService.alert(
+        "error",
+        "Er is een onbekende fout opgetreden, probeer het later opnieuw"
+      );
     }
   }
 })();

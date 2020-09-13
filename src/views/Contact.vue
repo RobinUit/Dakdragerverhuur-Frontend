@@ -8,13 +8,13 @@
       <br />
       <p>dakdragerverhuur.nl</p>
       <p>
-        <a href="https://goo.gl/maps/J766rguZDFzitVD5A" target="_blank"
-          >Zaagmolenweg 28 unit 10</a
+        <a href="https://goo.gl/maps/pzmxEfw7YyxgDfB96" target="_blank"
+          >Tankval 11</a
         >
       </p>
       <p>
-        <a href="https://goo.gl/maps/J766rguZDFzitVD5A" target="_blank"
-          >2401LN ALPHEN AAN DEN RIJN</a
+        <a href="https://goo.gl/maps/pzmxEfw7YyxgDfB96" target="_blank"
+          >2408ZC ALPHEN AAN DEN RIJN</a
         >
       </p>
       <br />
@@ -71,7 +71,7 @@ export default {
   }
 
   p {
-  margin: 0;
-}
+    margin: 0;
+  }
 }
 </style>

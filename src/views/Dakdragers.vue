@@ -1,7 +1,7 @@
 <template>
   <div class="cargo_racks">
     <div class="header">
-      <h1>Huur dakkoffers</h1>
+      <h1>Huur dakdragers</h1>
       <p>
         Alle prijzen inclusief
         <b>GRATIS</b>
@@ -50,7 +50,9 @@
                 </ul>
               </div>
               <div class="reserve">
-                <button @click="reservePage(dakdrager.id)">Reserveer direct</button>
+                <button @click="reservePage(dakdrager.id)">
+                  Reserveer direct
+                </button>
               </div>
             </div>
           </v-expansion-panel-content>
@@ -178,6 +180,35 @@ p {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             height: 35px;
             padding: 0 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .cargo_racks {
+    .items {
+      .v-expansion-panel-content {
+        .left,
+        .right {
+          left: unset;
+          right: unset;
+          width: 100%;
+          margin: unset;
+        }
+
+        .left {
+          img {
+            max-width: 350px;
+          }
+        }
+
+        .right {
+          .information,
+          .reserve {
+            text-align: unset;
           }
         }
       }

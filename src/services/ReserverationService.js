@@ -13,7 +13,7 @@ let data = {
   kenteken: "",
   merk: "",
   handelsbenaming: "",
-  eerste_afgifte_nl: "",
+  eerste_afgifte: "",
   aantal_deuren: "",
   inrichting: "",
   kleur: "",
@@ -35,10 +35,7 @@ export default new (class ReservationService {
   }
 
   sendDataToAPI() {
-    return ApiService.postRequest(
-      process.env.VUE_APP_API_URL + "/form",
-      this.formatProductData()
-    );
+    return ApiService.postRequest("/form", this.formatProductData());
   }
 
   formatProductData() {
@@ -69,21 +66,20 @@ export default new (class ReservationService {
   }
 
   resetForm() {
-    for (var key in data) {
-      console.log(key);
+    const keys = Object.keys(data);
+    for (var key of keys) {
       const exceptions = ["fietsendrager", "dakdrager", "dakkoffer"];
-      if (key == "date") {
-        data[key] = [];
-        return;
-      }
       if (exceptions.includes(key)) {
-        console.log(key);
         data[key] = "none";
-        return;
+        continue;
+      }
+      if (key == "date") {
+        data.date = [];
+        continue;
       }
       if (key == "aantal_fietsen") {
-        data[key] = 0;
-        return;
+        data.aantal_fietsen = 0;
+        continue;
       }
       data[key] = "";
     }
@@ -94,11 +90,10 @@ export default new (class ReservationService {
 
   getData() {
     let storedData = JSON.parse(localStorage.getItem("data"));
-    if (!storedData) {
+    if (storedData) {
+      data = storedData;
       return data;
     }
-    data = storedData;
-    return data;
   }
 
   updateData(key, value) {

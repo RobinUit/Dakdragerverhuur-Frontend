@@ -5,15 +5,13 @@
       cycle
       show-arrows-on-hover
       hide-delimiters
-      height="300"
+      height="auto"
       interval="10000"
     >
       <v-carousel-item
         v-for="(rating, index) in ratings"
         :key="index"
         :index="rating"
-        transition="fade-transition"
-        reverse-trasition="fade-transition"
       >
         <div class="rating" id="rating">
           <img
@@ -21,7 +19,6 @@
             alt="Quote icoon"
             class="quote"
           />
-
           <div class="text">
             <p>
               {{ rating.review }}
@@ -29,7 +26,7 @@
             <p id="author">- {{ rating.author }}</p>
           </div>
           <img
-            src="@/assets/images/overig/10.png"
+            :src="getImgUrl(rating.rating)"
             alt="10 sterren beoordeling"
             class="ratingImage"
           />
@@ -49,6 +46,12 @@ export default {
       ratings: RATINGS_JSON,
     };
   },
+  methods: {
+    getImgUrl(rating) {
+      var images = require.context("@/assets/images/overig", false, /\.png$/);
+      return images("./" + rating + ".png");
+    },
+  },
 };
 </script>
 
@@ -60,25 +63,20 @@ export default {
   .rating {
     position: relative;
     width: 80%;
-    height: 90%;
-    min-height: 200px;
+    min-height: 260px;
     padding: 20px;
     margin: 10px auto;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding-bottom: 50px;
-    transition: 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
 
     .text {
-      width: 75%;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      margin-bottom: 50px;
-
+      margin: 20px 70px;
       p {
         margin: 0;
+        color: black;
       }
 
       #author {
@@ -122,15 +120,6 @@ export default {
   .slideshow {
     .rating {
       .text {
-        position: relative;
-        left: unset;
-        top: unset;
-        transform: unset;
-        margin: 10px 55px 50px 55px;
-        height: auto;
-        width: auto;
-        overflow: hidden;
-
         p {
           margin: 5px;
           overflow: hidden;
@@ -146,6 +135,7 @@ export default {
         transform: translateX(50%);
         bottom: 25px;
         margin: 0;
+        width: 180px;
       }
     }
   }
@@ -155,7 +145,7 @@ export default {
   .slideshow {
     .rating {
       .text {
-        margin: 10px 25px 60px 25px;
+        margin: 10px 25px 25px 25px;
       }
 
       .quote {
