@@ -67,7 +67,7 @@ export default {
   a {
     text-decoration: none;
     font-weight: bold;
-    color: black;
+    color: black !important;
   }
 
   p {

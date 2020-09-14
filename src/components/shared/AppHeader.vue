@@ -130,7 +130,6 @@ export default {
       this.mobileNavIsOpened = !this.mobileNavIsOpened;
     },
     toggleHover() {
-      console.log("test");
       this.dropdownIsOpened = !this.dropdownIsOpened;
     },
   },
@@ -257,6 +256,7 @@ header {
 
   .mobileNavigation {
     display: none;
+    overflow-y: scroll;
   }
 }
 
@@ -310,6 +310,7 @@ header {
           height: 100vh;
           background-color: rgba(0, 0, 0, 0.8);
           z-index: 1;
+          overflow: hidden;
         }
 
         #menuToggle {
@@ -416,6 +417,7 @@ header {
           background: white;
           list-style-type: none;
           -webkit-font-smoothing: antialiased;
+          overflow: scroll;
           /* to stop flickering of text in safari */
 
           transform-origin: 0% 0%;
