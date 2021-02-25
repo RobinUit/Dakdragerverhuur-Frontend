@@ -5,7 +5,7 @@
         Dakdragerverhuur.nl
       </div>
       <div class="copyright">
-        © Copyright 2020 | Robin Uitbeijerse web development
+        © Copyright 2020 - {{ currentYear }} | Robin Uitbeijerse web development
       </div>
       <a
         class="contact"
@@ -20,6 +20,11 @@
 <script>
 export default {
   name: "AppFooter",
+  data() {
+    return {
+      currentYear: new Date().getFullYear(),
+    };
+  },
 };
 </script>
 

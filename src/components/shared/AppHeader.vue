@@ -152,7 +152,7 @@ header {
   background-color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: middle;
 }
 
 .headerElements {
