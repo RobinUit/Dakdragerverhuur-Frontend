@@ -61,7 +61,7 @@ export default new (class ValidateDataService {
       return false;
     }
     if (!regPhone.test(phonenumber)) {
-      AlertService.alert("error", "Vul een geldig telefoonnummer in");
+      AlertService.alert("error", "Vul een geldig telefoonnummer in (0612345678)");
       return false;
     }
     return true;

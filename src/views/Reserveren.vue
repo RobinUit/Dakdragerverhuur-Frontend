@@ -153,6 +153,12 @@ export default {
     };
   },
 
+  watch: {
+    'formData.telefoonnummer': function(val) {
+      this.formData.telefoonnummer = val.replace(/[^0-9.]/g, '');
+    },
+  },
+
   methods: {
     submitForm() {
       this.isLoading = true;

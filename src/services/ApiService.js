@@ -1,12 +1,12 @@
 import axios from "axios";
 import AlertService from "./AlertService";
 
-const apiURL = "https://api.uitbeijerse.eu/dakdragerverhuur";
+const API_URL = "https://api.uitbeijerse.eu/dakdragerverhuur";
 
 export default new (class ApiService {
   async getRequest(url) {
     try {
-      const response = await axios.get(apiURL + url);
+      const response = await axios.get(API_URL + url);
       return response.data;
     } catch (error) {
       this.handleErrors(error);
@@ -15,7 +15,7 @@ export default new (class ApiService {
 
   async postRequest(url, data) {
     try {
-      const response = await axios.post(apiURL + url, data);
+      const response = await axios.post(API_URL + url, data);
       return response.data;
     } catch (error) {
       this.handleErrors(error);
